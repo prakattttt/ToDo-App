@@ -6,7 +6,7 @@
   }
 
   .box {
-    @apply border-2 border-gray-200 px-3 py-1 text-[0.85rem] rounded-md;
+    @apply border-2 border-gray-200 px-3 py-1 text-[0.85rem] text-center rounded-md max-sm:text-[0.75rem];
   }
 
   .selected {
@@ -14,7 +14,7 @@
   }
 
   .list {
-    @apply p-3 border-2 border-gray-200 my-3 rounded-md;
+    @apply p-3 border-2 border-gray-200 my-3 rounded-md max-sm:text-[0.85rem];
   }
 
   .checkbox {
