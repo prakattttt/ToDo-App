@@ -5,16 +5,20 @@
     @apply flex justify-center items-center;
   }
 
+  .hover-scale:hover {
+    @apply transition-all ease-linear duration-150 scale-[1.05];
+  }
+
   .box {
-    @apply border-2 border-gray-200 px-3 py-1 text-[0.85rem] text-center rounded-md max-sm:text-[0.75rem];
+    @apply border-2 border-gray-200 px-3 py-1 text-[0.85rem] text-center rounded-md max-sm:text-[0.75rem] cursor-pointer hover:bg-gray-100;
   }
 
   .selected {
-    @apply border-black bg-black text-white;
+    @apply border-black bg-black text-white hover:bg-black;
   }
 
   .list {
-    @apply p-3 border-2 border-gray-200 my-3 rounded-md max-sm:text-[0.85rem];
+    @apply p-3 border-2 border-gray-200 my-3 rounded-md max-sm:text-[0.85rem] cursor-pointer hover:border-gray-300;
   }
 
   .checkbox {

@@ -13,9 +13,9 @@ const Main = () => {
         />
         <button
           className="ml-2 h-8 w-9 bg-black text-white rounded-md
-               flex items-center justify-center text-xl leading-none"
+               flex items-center justify-center text-xl leading-none hover-scale cursor-pointer"
         >
-        <FaPlus className="text-[1rem]"/>
+        <FaPlus className="text-[1rem] hover-scale"/>
         </button>
       </div>
       <div className="mt-4 mb-2 flex gap-3">
