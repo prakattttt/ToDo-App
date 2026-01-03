@@ -5,7 +5,7 @@ const Head = () => {
     <header className="center flex-col m-5">
       <div className="center mb-1">
         <img src={logo} className="w-12" alt="logo" />
-        <span className="text-2xl font-bold ml-1">To Do App</span>
+        <span className="text-2xl font-bold ml-1">Todo App</span>
       </div>
       <p className="text-[0.75rem] text-gray-700">
         Stay Organized and manage your tasks effeciently
