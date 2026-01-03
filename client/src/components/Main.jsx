@@ -1,9 +1,11 @@
+import { FaPlus } from "react-icons/fa"
+
 const Main = () => {
   return (
-    <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-8">
+    <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-8 shadow-xl">
       <div className="center">
         <input
-          className="bg-gray-100 w-full h-8 p-1 text-[1rem] rounded-md pl-2"
+          className="bg-gray-100 w-full h-8 p-1 text-[1rem] rounded-md pl-2 focus:outline-gray-200"
           type="search"
           name="task"
           id="task"
@@ -13,10 +15,10 @@ const Main = () => {
           className="ml-2 h-8 w-9 bg-black text-white rounded-md
                flex items-center justify-center text-xl leading-none"
         >
-          +
+        <FaPlus className="text-[1rem]"/>
         </button>
       </div>
-      <div className="my-3 flex gap-3">
+      <div className="mt-4 mb-2 flex gap-3">
         <div className="box selected">All (3)</div>
         <div className="box">Active (1)</div>
         <div className="box">Completed (2)</div>
@@ -52,10 +54,10 @@ const Main = () => {
           </li>
         </ul>
       </div>
-      <hr className="border-t-2 border-gray-100 mt-4"/>
+      <hr className="border-t-2 border-gray-300 mt-6"/>
       <div className="bottom-main flex items-center justify-between mt-3">
-        <p>2 tasks remaining</p>
-        <p>1 completed</p>
+        <p className="text-gray-700">2 tasks remaining</p>
+        <p className="text-green-600">1 completed</p>
       </div>
     </main>
   );

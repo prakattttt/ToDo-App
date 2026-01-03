@@ -6,7 +6,7 @@
   }
 
   .box {
-    @apply border-2 border-gray-200 px-2 py-1 text-[0.75rem] rounded-md;
+    @apply border-2 border-gray-200 px-3 py-1 text-[0.85rem] rounded-md;
   }
 
   .selected {
