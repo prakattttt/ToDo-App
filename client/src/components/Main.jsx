@@ -5,14 +5,14 @@ const Main = () => {
     <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-8 shadow-xl max-lg:mx-5 max-sm:mx-2 max-sm:p-3">
       <div className="center">
         <input
-          className="bg-gray-100 w-full h-8 p-1 text-[1rem] rounded-md pl-2 focus:outline-gray-200 max-sm:text-[0.85rem]"
+          className="bg-gray-100 w-full h-10 p-1 text-[1rem] rounded-md pl-2 focus:outline-gray-200 max-sm:text-[0.85rem]"
           type="search"
           name="task"
           id="task"
           placeholder="Add a new task..."
         />
         <button
-          className="ml-2 h-8 w-9 bg-black text-white rounded-md
+          className="ml-2 h-10 w-9 bg-black text-white rounded-md
                flex items-center justify-center text-xl leading-none hover-scale cursor-pointer"
         >
           <FaPlus className="text-[1rem] hover-scale" />
