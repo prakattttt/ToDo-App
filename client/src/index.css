@@ -1,7 +1,35 @@
 @import "tailwindcss";
 
 @layer components {
-    .center {
-        @apply flex justify-center items-center;
-    }
+  .center {
+    @apply flex justify-center items-center;
+  }
+
+  .box {
+    @apply border-2 border-gray-200 px-2 py-1 text-[0.75rem] rounded-md;
+  }
+
+  .selected {
+    @apply border-black bg-black text-white;
+  }
+
+  .list {
+    @apply p-3 border-2 border-gray-200 my-3 rounded-md;
+  }
+
+  .checkbox {
+    @apply mr-2 h-5 w-5 cursor-pointer appearance-none
+         rounded-sm border border-slate-400
+         transition-colors relative;
+  }
+
+  .checkbox:checked {
+    @apply bg-black border-black;
+  }
+
+  .checkbox:checked::after {
+    content: "";
+    @apply absolute left-1.5 top-0.5 w-1.5 h-2.5
+         border-white border-r-2 border-b-2 rotate-45;
+  }
 }
