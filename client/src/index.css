@@ -18,11 +18,12 @@
   }
 
   .list {
-    @apply p-3 border-2 border-gray-200 my-3 rounded-md max-sm:text-[0.85rem] cursor-pointer hover:border-gray-300;
+    @apply p-3 border-2 border-gray-200 my-3 rounded-md
+         max-sm:text-[0.85rem] hover:border-gray-300;
   }
 
   .checkbox {
-    @apply mr-2 h-5 w-5 cursor-pointer appearance-none
+    @apply mr-3 h-5 w-5 cursor-pointer appearance-none
          rounded-sm border border-slate-400
          transition-colors relative;
   }
@@ -35,5 +36,13 @@
     content: "";
     @apply absolute left-1.5 top-0.5 w-1.5 h-2.5
          border-white border-r-2 border-b-2 rotate-45;
+  }
+
+  .task-text {
+    @apply transition-all;
+  }
+
+  .peer:checked ~ .task-text {
+    @apply line-through text-gray-400;
   }
 }

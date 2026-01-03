@@ -1,4 +1,4 @@
-import { FaPlus } from "react-icons/fa"
+import { FaPlus } from "react-icons/fa";
 
 const Main = () => {
   return (
@@ -15,7 +15,7 @@ const Main = () => {
           className="ml-2 h-8 w-9 bg-black text-white rounded-md
                flex items-center justify-center text-xl leading-none hover-scale cursor-pointer"
         >
-        <FaPlus className="text-[1rem] hover-scale"/>
+          <FaPlus className="text-[1rem] hover-scale" />
         </button>
       </div>
       <div className="mt-4 mb-2 flex gap-3">
@@ -25,36 +25,39 @@ const Main = () => {
       </div>
       <div className="tasks">
         <ul className="mt-4">
-          <li className="list flex items-center">
-            <input
-              className="checkbox center"
-              type="checkbox"
-              name="task"
-              id="task1"
-            />
-            Create a responsive design
+          <li className="list">
+            <label
+              htmlFor="task1"
+              className="flex items-center w-full cursor-pointer"
+            >
+              <input className="checkbox peer" type="checkbox" id="task1" />
+              <span className="task-text">Create a responsive design</span>
+            </label>
           </li>
-          <li className="list flex items-center">
-            <input
-              className="checkbox"
-              type="checkbox"
-              name="task"
-              id="task2"
-            />
-            Add task filtering
+
+          <li className="list">
+            <label
+              htmlFor="task2"
+              className="flex items-center w-full cursor-pointer"
+            >
+              <input className="checkbox peer" type="checkbox" id="task2" />
+              <span className="task-text">Add task filtering</span>
+            </label>
           </li>
-          <li className="list flex items-center">
-            <input
-              className="checkbox"
-              type="checkbox"
-              name="task"
-              id="task3"
-            />
-            Implement Database
+
+          <li className="list">
+            <label
+              htmlFor="task3"
+              className="flex items-center w-full cursor-pointer"
+            >
+              <input className="checkbox peer" type="checkbox" id="task3" />
+              <span className="task-text">Implement Database</span>
+            </label>
           </li>
         </ul>
       </div>
-      <hr className="border-t-2 border-gray-300 mt-6"/>
+
+      <hr className="border-t-2 border-gray-300 mt-6" />
       <div className="bottom-main flex items-center justify-between mt-3 max-sm:text-[0.85rem]">
         <p className="text-gray-700">2 tasks remaining</p>
         <p className="text-green-600">1 completed</p>
