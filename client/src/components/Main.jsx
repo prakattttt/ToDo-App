@@ -46,6 +46,11 @@ const Main = () => {
     );
   };
 
+  const deleteTodo = (id) => {
+    const afterTodos = todos.filter(td => td.id !== id)
+    setTodos(afterTodos)
+  }
+
   return (
     <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-12 shadow-xl max-lg:mx-5 max-sm:mx-2 max-sm:p-3 max-sm:mt-8">
       <div className="center">
@@ -113,6 +118,7 @@ const Main = () => {
                     className="text-[1rem] text-red-500 mr-3 
                        opacity-0 group-hover:opacity-100 
                        transition duration-300 hover:scale-[1.15]"
+                    onClick={() => deleteTodo(item.id)}
                   />
                 </div>
               </label>
