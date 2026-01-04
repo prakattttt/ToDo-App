@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrashAlt } from "react-icons/fa";
 import { nanoid } from "nanoid";
 
 const Main = () => {
@@ -92,7 +92,7 @@ const Main = () => {
         )}
         <ul className="mt-4">
           {todos.map((item, i) => (
-            <li className="list" key={item.id}>
+            <li className="list group" key={item.id}>
               <label
                 htmlFor={item.id}
                 className="flex items-center w-full cursor-pointer"
@@ -104,7 +104,10 @@ const Main = () => {
                   checked={!item.isActive}
                   onChange={() => toggleActive(item.id)}
                 />
-                <span className="task-text">{item.todo}</span>
+                <div className="w-full flex justify-between items-center">
+                  <p className="task-text">{item.todo}</p>
+                  <FaTrashAlt className="text-[1rem] text-red-500 mr-3 opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-300 hover:scale-[1.15] cursor-pointer" />
+                </div>
               </label>
             </li>
           ))}
