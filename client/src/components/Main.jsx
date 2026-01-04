@@ -6,6 +6,7 @@ const Main = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
   const [activeCount, setActiveCount] = useState(0);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     setActiveCount(todos.filter((todo) => todo.isActive).length);
@@ -15,7 +16,15 @@ const Main = () => {
     setInput(e.target.value);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && input.trim() !== "") {
+      setData();
+    }
+  };
+
   const setData = () => {
+    if (input.trim() === "") return;
+
     setTodos((prevTodos) => [
       ...prevTodos,
       { id: nanoid(), todo: input, isActive: true },
@@ -42,6 +51,7 @@ const Main = () => {
           onChange={getData}
           value={input}
           placeholder="Add a new task..."
+          onKeyDown={handleKeyDown}
         />
         <button
           className="ml-2 h-10 w-9 bg-black text-white rounded-md
@@ -52,10 +62,28 @@ const Main = () => {
         </button>
       </div>
       <div className="mt-4 mb-2 flex gap-3">
-        <div className="box selected">All ({todos.length})</div>
-        <div className="box">Active ({activeCount})</div>
-        <div className="box">Completed ({todos.length - activeCount})</div>
+        <div
+          className={`box ${filter === "all" ? "selected" : ""}`}
+          onClick={() => setFilter("all")}
+        >
+          All ({todos.length})
+        </div>
+
+        <div
+          className={`box ${filter === "active" ? "selected" : ""}`}
+          onClick={() => setFilter("active")}
+        >
+          Active ({activeCount})
+        </div>
+
+        <div
+          className={`box ${filter === "completed" ? "selected" : ""}`}
+          onClick={() => setFilter("completed")}
+        >
+          Completed ({todos.length - activeCount})
+        </div>
       </div>
+
       <div className="tasks">
         {todos.length === 0 ? (
           <p className="mt-6 text-gray-500 pl-1">No tasks yet!</p>
@@ -85,7 +113,11 @@ const Main = () => {
       <hr className="border-t-2 border-gray-300 mt-6" />
       <div className="bottom-main flex items-center justify-between mt-3 max-sm:text-[0.85rem]">
         <p className="text-gray-700">{activeCount} tasks remaining</p>
-        <p className="text-green-600">{(todos.length - activeCount) ? `${todos.length - activeCount} completed` : ''}</p>
+        <p className="text-green-600">
+          {todos.length - activeCount
+            ? `${todos.length - activeCount} completed`
+            : ""}
+        </p>
       </div>
     </main>
   );
