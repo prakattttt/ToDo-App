@@ -107,9 +107,8 @@ const Main = () => {
                   onChange={() => toggleActive(item.id)}
                 />
 
-                <div className="w-full flex justify-between items-center">
-                  <p className="task-text">{item.todo}</p>
-
+                <div className="w-full flex justify-between items-center task-text">
+                  <p>{item.todo}</p>
                   <FaTrashAlt
                     className="text-[1rem] text-red-500 mr-3 
                        opacity-0 group-hover:opacity-100 
