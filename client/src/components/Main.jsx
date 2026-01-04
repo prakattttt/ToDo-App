@@ -8,6 +8,12 @@ const Main = () => {
   const [activeCount, setActiveCount] = useState(0);
   const [filter, setFilter] = useState("all");
 
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "active") return todo.isActive;
+    if (filter === "completed") return !todo.isActive;
+    return true;
+  });
+
   useEffect(() => {
     setActiveCount(todos.filter((todo) => todo.isActive).length);
   }, [todos]);
@@ -86,27 +92,29 @@ const Main = () => {
 
       <div className="tasks">
         {todos.length === 0 ? (
-          <p className="mt-6 text-gray-500 pl-1">No tasks yet!</p>
+          <p className="mt-6 text-gray-500 pl-1">{filter === "all" ? "No tasks yet!" : `No ${filter === "completed" ? "completed" : "active"} tasks!`}</p>
         ) : (
           ""
         )}
         <ul className="mt-4">
-          {todos.map((item, i) => (
+          {filteredTodos.map((item) => (
             <li className="list group" key={item.id}>
-              <label
-                htmlFor={item.id}
-                className="flex items-center w-full cursor-pointer"
-              >
+              <label className="flex items-center w-full cursor-pointer">
                 <input
                   className="checkbox peer"
                   type="checkbox"
-                  id={item.id}
                   checked={!item.isActive}
                   onChange={() => toggleActive(item.id)}
                 />
+
                 <div className="w-full flex justify-between items-center">
                   <p className="task-text">{item.todo}</p>
-                  <FaTrashAlt className="text-[1rem] text-red-500 mr-3 opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-300 hover:scale-[1.15] cursor-pointer" />
+
+                  <FaTrashAlt
+                    className="text-[1rem] text-red-500 mr-3 
+                       opacity-0 group-hover:opacity-100 
+                       transition duration-300 hover:scale-[1.15]"
+                  />
                 </div>
               </label>
             </li>
