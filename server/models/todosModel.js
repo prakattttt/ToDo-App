@@ -19,6 +19,22 @@ TodoSchema.statics.getAllTodos = async function () {
   }
 };
 
+TodoSchema.statics.getActiveData = async function () {
+  try {
+    return await this.find({ isActive: true });
+  } catch (err) {
+    throw new Error("Failed to fetch active todos!");
+  }
+};
+
+TodoSchema.statics.getInactiveData = async function () {
+  try {
+    return await this.find({ isActive: false });
+  } catch (err) {
+    throw new Error("Failed to fetch inactive todos!");
+  }
+};
+
 const Todos = model("Todos", TodoSchema);
 
 export default Todos;
