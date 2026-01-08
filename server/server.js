@@ -5,14 +5,14 @@ import todoRoute from "./routes/todoRoute.js";
 
 const app = express();
 
-app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-const port = process.env.PORT;
+app.use(express.json());
 
 await connectToDB(process.env.URL);
 
 app.use("/todos", todoRoute);
 
-app.listen(port, () => {
-  console.log(`Server has started on PORT ${port}!`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server has started on PORT ${process.env.PORT}!`);
 });

@@ -35,6 +35,27 @@ TodoSchema.statics.getInactiveData = async function () {
   }
 };
 
+TodoSchema.statics.addNewTodos = async function (todos, isActive) {
+  try {
+    return await this.create({
+      todos,
+      isActive
+    })
+  } catch (err) {
+    throw new Error("Failed to add todos!");
+  }
+};
+
+TodoSchema.statics.removeTodos = async function (id) {
+  const todo = await this.findByIdAndDelete(id);
+
+  if (!todo) {
+    throw new Error(`No todos found with id ${id}`);
+  }
+
+  return todo;
+};
+
 const Todos = model("Todos", TodoSchema);
 
 export default Todos;
