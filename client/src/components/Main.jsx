@@ -13,7 +13,6 @@ const Main = () => {
     const fetchTodos = async () => {
       try {
         const response = await axios.get("http://localhost:5000/todos");
-        console.log(response.data)
         setTodos(response.data);
       } catch (error) {
         console.error(error);
@@ -43,21 +42,26 @@ const Main = () => {
     }
   };
 
-  const setData = () => {
+  const setData = async () => {
     if (input.trim() === "") return;
 
-    setTodos((prevTodos) => [
-      ...prevTodos,
-      { id: nanoid(), todo: input, isActive: true },
-    ]);
+    const response = await axios.post("http://localhost:5000/todos", {
+      todos: input,
+    });
+
+    setTodos((prev) => [...prev, response.data]);
     setInput("");
   };
 
-  const toggleActive = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, isActive: !todo.isActive } : todo
-      )
+  const toggleActive = async (id) => {
+    const response = await axios.patch(
+      `http://localhost:5000/todos/toggle/${id}`
+    );
+
+    const updatedTodo = response.data;
+
+    setTodos((prev) =>
+      prev.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
     );
   };
 
