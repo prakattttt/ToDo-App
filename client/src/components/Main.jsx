@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
+import axios from "axios";
 import { nanoid } from "nanoid";
 
 const Main = () => {
@@ -7,6 +8,20 @@ const Main = () => {
   const [todos, setTodos] = useState([]);
   const [activeCount, setActiveCount] = useState(0);
   const [filter, setFilter] = useState("all");
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/todos");
+        console.log(response.data)
+        setTodos(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchTodos();
+  }, []);
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "active") return todo.isActive;
@@ -47,9 +62,9 @@ const Main = () => {
   };
 
   const deleteTodo = (id) => {
-    const afterTodos = todos.filter(td => td.id !== id)
-    setTodos(afterTodos)
-  }
+    const afterTodos = todos.filter((td) => td.id !== id);
+    setTodos(afterTodos);
+  };
 
   return (
     <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-12 shadow-xl max-lg:mx-5 max-sm:mx-2 max-sm:p-3 max-sm:mt-8">
@@ -97,28 +112,32 @@ const Main = () => {
 
       <div className="tasks">
         {todos.length === 0 ? (
-          <p className="mt-6 text-gray-500 pl-1">{filter === "all" ? "No tasks yet!" : `No ${filter === "completed" ? "completed" : "active"} tasks!`}</p>
+          <p className="mt-6 text-gray-500 pl-1">
+            {filter === "all"
+              ? "No tasks yet!"
+              : `No ${filter === "completed" ? "completed" : "active"} tasks!`}
+          </p>
         ) : (
           ""
         )}
         <ul className="mt-4">
           {filteredTodos.map((item) => (
-            <li className="list group" key={item.id}>
+            <li className="list group" key={item._id}>
               <label className="flex items-center w-full cursor-pointer">
                 <input
                   className="checkbox peer"
                   type="checkbox"
                   checked={!item.isActive}
-                  onChange={() => toggleActive(item.id)}
+                  onChange={() => toggleActive(item._id)}
                 />
 
                 <div className="w-full flex justify-between items-center task-text">
-                  <p>{item.todo}</p>
+                  <p>{item.todos}</p>
                   <FaTrashAlt
                     className="text-[1rem] text-red-500 mr-3 
                        opacity-0 group-hover:opacity-100 
                        transition duration-300 hover:scale-[1.15]"
-                    onClick={() => deleteTodo(item.id)}
+                    onClick={() => deleteTodo(item._id)}
                   />
                 </div>
               </label>
