@@ -10,24 +10,6 @@ const getTodos = async (req, res, next) => {
   }
 };
 
-const getActiveTodos = async (req, res, next) => {
-  try {
-    const data = await Todos.getActiveData();
-    res.status(200).json(data);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getInactiveTodos = async (req, res, next) => {
-  try {
-    const data = await Todos.getInactiveData();
-    res.status(200).json(data);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const addTodos = async (req, res, next) => {
   try {
     const { todos, isActive } = req.body;
@@ -69,4 +51,4 @@ const deleteTodos = async (req, res, next) => {
   }
 };
 
-export { getTodos, getActiveTodos, getInactiveTodos, addTodos, deleteTodos, toggleActive };
+export { getTodos, addTodos, deleteTodos, toggleActive };
