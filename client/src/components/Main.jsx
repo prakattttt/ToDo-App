@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
-import { nanoid } from "nanoid";
 
 const Main = () => {
   const [input, setInput] = useState("");
@@ -65,8 +64,11 @@ const Main = () => {
     );
   };
 
-  const deleteTodo = (id) => {
-    const afterTodos = todos.filter((td) => td.id !== id);
+  const deleteTodo = async (id) => {
+    const response = await axios.delete(`http://localhost:5000/todos/${id}`);
+    const deletedId = response.data._id;
+
+    const afterTodos = todos.filter((td) => td._id !== deletedId);
     setTodos(afterTodos);
   };
 
@@ -127,24 +129,30 @@ const Main = () => {
         <ul className="mt-4">
           {filteredTodos.map((item) => (
             <li className="list group" key={item._id}>
-              <label className="flex items-center w-full cursor-pointer">
-                <input
-                  className="checkbox peer"
-                  type="checkbox"
-                  checked={!item.isActive}
-                  onChange={() => toggleActive(item._id)}
-                />
+              <div className="flex items-center w-full">
+                {/* Checkbox + text (peer relationship preserved) */}
+                <label className="flex items-center flex-1 cursor-pointer">
+                  <input
+                    className="checkbox peer"
+                    type="checkbox"
+                    checked={!item.isActive}
+                    onChange={() => toggleActive(item._id)}
+                  />
 
-                <div className="w-full flex justify-between items-center task-text">
-                  <p>{item.todos}</p>
+                  <div className="task-text w-full flex justify-between items-center">
+                    <p>{item.todos}</p>
+                  </div>
+                </label>
+
+                {!item.isActive && (
                   <FaTrashAlt
-                    className="text-[1rem] text-red-500 mr-3 
-                       opacity-0 group-hover:opacity-100 
-                       transition duration-300 hover:scale-[1.15]"
+                    className="text-[1rem] text-red-500 mr-3
+          opacity-0 group-hover:opacity-100
+          transition duration-300 hover:scale-[1.15] cursor-pointer"
                     onClick={() => deleteTodo(item._id)}
                   />
-                </div>
-              </label>
+                )}
+              </div>
             </li>
           ))}
         </ul>
