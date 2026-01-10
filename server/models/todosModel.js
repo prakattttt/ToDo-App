@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const TodoSchema = new Schema({
   todos: {
-    type: [String],
+    type: String,
     required: true,
   },
   isActive: {

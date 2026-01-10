@@ -14,8 +14,8 @@ const addTodos = async (req, res, next) => {
   try {
     const { todos, isActive } = req.body;
 
-    if (!Array.isArray(todos) || todos.length === 0) {
-      throw new AppError("Todos must be a non-empty array", 400);
+    if (!todos) {
+      throw new AppError("Todos must be a non-empty string", 400);
     }
 
     const newTodo = await Todos.addNewTodos(todos, isActive);
