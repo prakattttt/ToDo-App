@@ -43,6 +43,16 @@ const addTodos = async (req, res, next) => {
   }
 };
 
+const toggleActive = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const toggledTodo = await Todos.toggleTodo(id);
+    res.status(200).json(toggledTodo);
+  } catch (error) {
+    next(error);
+  }
+}
+
 const deleteTodos = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -59,4 +69,4 @@ const deleteTodos = async (req, res, next) => {
   }
 };
 
-export { getTodos, getActiveTodos, getInactiveTodos, addTodos, deleteTodos };
+export { getTodos, getActiveTodos, getInactiveTodos, addTodos, deleteTodos, toggleActive };

@@ -39,8 +39,8 @@ TodoSchema.statics.addNewTodos = async function (todos, isActive) {
   try {
     return await this.create({
       todos,
-      isActive
-    })
+      isActive,
+    });
   } catch (err) {
     throw new Error("Failed to add todos!");
   }
@@ -52,6 +52,19 @@ TodoSchema.statics.removeTodos = async function (id) {
   if (!todo) {
     throw new Error(`No todos found with id ${id}`);
   }
+
+  return todo;
+};
+
+TodoSchema.statics.toggleTodo = async function (id) {
+  const todo = await this.findById(id);
+
+  if (!todo) {
+    throw new Error(`No todo found with id ${id}`);
+  }
+
+  todo.isActive = !todo.isActive;
+  await todo.save();
 
   return todo;
 };
