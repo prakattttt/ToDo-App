@@ -1,4 +1,4 @@
-import logo from "../assets/checklist.png"
+import logo from "../assets/checklist.png";
 
 const Head = () => {
   return (
