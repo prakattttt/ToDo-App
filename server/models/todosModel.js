@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const TodoSchema = new Schema({
   todos: {
     type: String,
-    required: true,
+    required: [true, "Please enter a todo!"],
   },
   isActive: {
     type: Boolean,
