@@ -66,7 +66,51 @@ const logoutUser = async (req, res, next) => {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict" });
     res.clearCookie("refreshToken", { httpOnly: true, sameSite: "Strict" });
 
-    res.status(200).json({ message: "Logout Successful!" });
+    res.status(200).json({ message: "Logout Successful!" , success: true});
+  } catch (error) {
+    next(error);
+  }
+};
+
+const refreshAccessToken = async (req, res, next) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return next(new AppError("Refresh token missing! User not authenticated!", 401));
+    }
+
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (err, payload) => {
+        if (err) {
+          return next(new AppError("Invalid or expired refresh token!", 403));
+        }
+
+        const user = await Users.findOne({
+          _id: payload._id,
+          refreshTokens: refreshToken,
+        });
+
+        if (!user) {
+          return next(new AppError("Refresh token not recognized!", 403));
+        }
+
+        const newAccessToken = generateAccessToken(user._id);
+
+        res.cookie("jwt", newAccessToken, {
+          httpOnly: true,
+          maxAge: 15 * 60 * 1000,
+          sameSite: "Strict",
+        });
+
+        return res.status(200).json({
+          message: "Access token refreshed",
+          success: true,
+        });
+      }
+    );
   } catch (error) {
     next(error);
   }
@@ -84,4 +128,4 @@ function generateRefreshToken(userId) {
   });
 }
 
-export { loginUser, registerUser, logoutUser };
+export { loginUser, registerUser, logoutUser, refreshAccessToken };
