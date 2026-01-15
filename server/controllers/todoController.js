@@ -3,7 +3,7 @@ import AppError from "../utils/AppError.js";
 
 const getTodos = async (req, res, next) => {
   try {
-    const data = await Todos.getAllTodos();
+    const data = await Todos.getUserTodos(req._id);
     res.status(200).json(data);
   } catch (error) {
     next(error);
@@ -18,7 +18,8 @@ const addTodos = async (req, res, next) => {
       throw new AppError("Todos must be a non-empty string", 400);
     }
 
-    const newTodo = await Todos.addNewTodos(todos, isActive);
+    const newTodo = await Todos.addNewTodos(todos, isActive, req._id);
+
     res.status(201).json(newTodo);
   } catch (error) {
     next(error);

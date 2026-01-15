@@ -19,11 +19,20 @@ const TodoSchema = new Schema(
   { timestamps: true }
 );
 
-TodoSchema.statics.addNewTodos = async function (todos, isActive) {
+TodoSchema.statics.getUserTodos = async function (userId) {
+  try {
+    return await this.find({ user: userId });
+  } catch (error) {
+    throw new Error("Failed to fetch user todos");
+  }
+};
+
+TodoSchema.statics.addNewTodos = async function (todos, isActive, user) {
   try {
     return await this.create({
       todos,
       isActive,
+      user
     });
   } catch (err) {
     throw new Error("Failed to add todos!");
