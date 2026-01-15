@@ -39,6 +39,7 @@ const UserSchema = new Schema(
             minLowercase: 1,
             minUppercase: 1,
             minNumbers: 1,
+            minSymbols: 0
           }),
         message:
           "Password must contain at least one uppercase letter, one lowercase letter, and one number",
