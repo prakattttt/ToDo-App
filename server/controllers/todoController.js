@@ -12,7 +12,7 @@ const getTodos = async (req, res, next) => {
 
 const addTodos = async (req, res, next) => {
   try {
-    const { todos, isActive } = req.body;
+    const { todos, isActive } = req.body || {};
 
     if (!todos) {
       throw new AppError("Todos must be a non-empty string", 400);

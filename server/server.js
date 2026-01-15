@@ -7,6 +7,7 @@ import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import authenticateUser from "./middlewares/authentication.js";
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.use(
 
 await connectToDB(process.env.URL);
 
-app.use("/todos", todoRoute);
+app.use("/todos", authenticateUser, todoRoute);
 
 app.use("/users", userRoute);
 

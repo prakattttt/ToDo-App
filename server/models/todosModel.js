@@ -1,23 +1,23 @@
 import { Schema, model } from "mongoose";
 
-const TodoSchema = new Schema({
-  todos: {
-    type: String,
-    required: [true, "Please enter a todo!"],
+const TodoSchema = new Schema(
+  {
+    todos: {
+      type: String,
+      required: [true, "Please enter a todo!"],
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-});
-
-TodoSchema.statics.getAllTodos = async function () {
-  try {
-    return await this.find();
-  } catch (err) {
-    throw new Error("Failed to fetch todos");
-  }
-};
+  { timestamps: true }
+);
 
 TodoSchema.statics.addNewTodos = async function (todos, isActive) {
   try {
