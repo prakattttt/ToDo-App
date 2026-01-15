@@ -2,6 +2,7 @@ import dotenv from "dotenv/config";
 import express from "express";
 import connectToDB from "./database/dbconfig.js";
 import todoRoute from "./routes/todoRoute.js";
+import userRoute from "./routes/userRoute.js";
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import cors from "cors";
@@ -23,6 +24,8 @@ app.use(
 await connectToDB(process.env.URL);
 
 app.use("/todos", todoRoute);
+
+app.use("/users", userRoute);
 
 app.use(notFound);
 

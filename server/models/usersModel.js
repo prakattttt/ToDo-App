@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
 
 const UserSchema = new Schema(
   {
@@ -47,4 +48,16 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("User", UserSchema);
+UserSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+
+UserSchema.statics.createUser = async function (username, email, password) {
+  return await this.create({ username, email, password });
+};
+
+const Users = model("User", UserSchema);
+
+export default Users;
