@@ -4,7 +4,7 @@ import Users from "../models/usersModel.js";
 
 const registerUser = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password } = req.body || {};
 
     if (!username || !email || !password)
       return next(
@@ -15,13 +15,7 @@ const registerUser = async (req, res, next) => {
 
     res.status(201).json({ message: "Registration Successful!" });
   } catch (error) {
-    if (error.code === 11000) {
-      const field = Object.keys(error.keyValue)[0];
-      return next(new AppError(`${field} already exists!`, 400));
-    }
-    console.log(error.name);
-    console.log(error.message);
-    console.log(error.errors);
+    console.log(error)
     next(error);
   }
 };
