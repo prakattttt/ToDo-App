@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import AppError from "../utils/AppError.js";
 import validator from "validator";
 import bcrypt from "bcrypt";
 
@@ -39,11 +40,15 @@ const UserSchema = new Schema(
             minLowercase: 1,
             minUppercase: 1,
             minNumbers: 1,
-            minSymbols: 0
+            minSymbols: 0,
           }),
         message:
           "Password must contain at least one uppercase letter, one lowercase letter, and one number",
       },
+    },
+    refreshTokens: {
+      type: [String],
+      default: [],
     },
   },
   { timestamps: true }
@@ -54,10 +59,39 @@ UserSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-
 UserSchema.statics.createUser = async function (username, email, password) {
   return await this.create({ username, email, password });
 };
+
+UserSchema.statics.loginUser = async function (email, password) {
+  const user = await this.findOne({ email });
+
+  if (!user)
+    throw new AppError(`User with the email ${email} doesn't exist!`, 401);
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) throw new AppError("Invalid password!", 401);
+
+  return user;
+};
+
+UserSchema.statics.addRefreshToken = async function (userId, token) {
+  const user = await this.findById(userId);
+  user.refreshTokens.push(token);
+  await user.save();
+};
+
+UserSchema.statics.removeRefreshToken = async function (token) {
+  const user = await this.findOne({ refreshTokens: token });
+  if (!user) return null;
+
+  user.refreshTokens = user.refreshTokens.filter(t => t !== token);
+  await user.save();
+
+  return user;
+};
+
 
 const Users = model("User", UserSchema);
 
