@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../api.js";
@@ -8,11 +8,14 @@ import TodoList from "../components/TodoList";
 import TodoFooter from "../components/TodoFooter";
 import Foot from "../components/Foot";
 import LogOut from "../components/LogOut.jsx";
+import User from "../components/User.jsx";
 
 const TodoPage = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
+
+  const user = useRef("user");
 
   const navigate = useNavigate();
 
@@ -94,6 +97,7 @@ const TodoPage = () => {
 
   return (
     <>
+    <User />
       <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-12 shadow-xl">
         <TodoInput input={input} setInput={setInput} addTodo={addTodo} />
 
