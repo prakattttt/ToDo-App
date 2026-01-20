@@ -3,14 +3,30 @@ import { FaUser, FaLock, FaUserCircle } from "react-icons/fa";
 import AuthLayout from "../components/AuthLayout";
 import AuthInput from "../components/AuthInput";
 import { Link } from "react-router-dom";
+import api from "../api";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    console.log({ username, email, password });
+  const handleSubmit = async () => {
+    try {
+      const { data } = await api.post("/users/register", {
+        username,
+        email,
+        password,
+      });
+      toast.success(data.message);
+      if (data.success) {
+        setUsername("");
+        setEmail("");
+        setPassword("");
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
 
   return (
