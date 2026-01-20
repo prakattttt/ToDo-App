@@ -7,6 +7,7 @@ import TodoFilters from "../components/TodoFilters";
 import TodoList from "../components/TodoList";
 import TodoFooter from "../components/TodoFooter";
 import Foot from "../components/Foot";
+import LogOut from "../components/LogOut.jsx";
 
 const TodoPage = () => {
   const [input, setInput] = useState("");
@@ -112,6 +113,7 @@ const TodoPage = () => {
       </main>
 
       <Foot />
+      <LogOut />
     </>
   );
 };

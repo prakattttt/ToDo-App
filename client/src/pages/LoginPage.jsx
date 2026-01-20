@@ -5,6 +5,7 @@ import AuthInput from "../components/AuthInput";
 import { Link } from "react-router-dom";
 import api from "../api.js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -17,14 +18,14 @@ const LoginPage = () => {
       const { data } = await api.post("/users/login", {
       email, password
       });
-      console.log(data);
+      toast.success(data.message);
       if(data.success) {
         setTimeout(() => {
           navigate("/");
         }, 1500)
       }
     } catch (err) {
-      console.log(err.response.data.message);
+      toast.error(err.response.data.message);
     }
   };
 

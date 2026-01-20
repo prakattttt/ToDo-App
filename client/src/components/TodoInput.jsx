@@ -13,7 +13,7 @@ const TodoInput = ({ input, setInput, addTodo }) => {
       />
 
       <button
-        className="ml-2 h-10 w-9 bg-black text-white rounded-md center"
+        className="ml-2 h-10 w-9 bg-black text-white rounded-md center hover-scale cursor-pointer"
         onClick={addTodo}
       >
         <FaPlus />
