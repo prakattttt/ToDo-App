@@ -17,8 +17,12 @@ const TodoPage = () => {
   const navigate = useNavigate();
 
   const handleAuthError = (err) => {
-    if (err.status === 401) {
-      toast.error("User not authenticated. Please login again!");
+    if (
+      err.response &&
+      (err.response.status === 401 || err.response.status === 403)
+    ) {
+      toast.error(err.response.data.message);
+
       setTimeout(() => {
         navigate("/login");
       }, 1500);

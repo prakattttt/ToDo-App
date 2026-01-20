@@ -11,7 +11,9 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       const { data } = await api.post("/users/register", {
         username,
@@ -25,7 +27,11 @@ const RegisterPage = () => {
         setPassword("");
       }
     } catch (err) {
-      toast.error(err.response.data.message);
+      if (err.response && err.response.data.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Registration failed. Try again!");
+      }
     }
   };
 
@@ -45,7 +51,7 @@ const RegisterPage = () => {
         </>
       }
     >
-      <form action={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <AuthInput
           label="Username"
           type="text"

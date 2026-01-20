@@ -10,22 +10,29 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       const { data } = await api.post("/users/login", {
-      email, password
+        email,
+        password,
       });
       toast.success(data.message);
-      if(data.success) {
+      if (data.success) {
         setTimeout(() => {
           navigate("/");
-        }, 1500)
+        }, 1500);
       }
     } catch (err) {
-      toast.error(err.response.data.message);
+      if (err.response && err.response.data.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Login failed. Try again!");
+      }
     }
   };
 
@@ -45,7 +52,7 @@ const LoginPage = () => {
         </>
       }
     >
-      <form action={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <AuthInput
           label="Email"
           type="email"
@@ -66,9 +73,10 @@ const LoginPage = () => {
 
         <button
           type="submit"
-          className="w-full h-11 bg-black text-white rounded-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+          className="w-full h-11 bg-black text-white rounded-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+        >
           Login
-        </button> 
+        </button>
       </form>
     </AuthLayout>
   );
