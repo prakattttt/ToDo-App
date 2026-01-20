@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import api from "../api.js";
 import TodoInput from "../components/TodoInput";
 import TodoFilters from "../components/TodoFilters";
 import TodoList from "../components/TodoList";
@@ -11,18 +13,33 @@ const TodoPage = () => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
 
+  const navigate = useNavigate();
+
+  const handleAuthError = (err) => {
+    if (err.status === 401) {
+      toast.error("User not authenticated. Please login again!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } else {
+      console.error(err);
+      toast.error("Something went wrong. Try again!");
+    }
+  };
+
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/todos");
+        const { data } = await api.get("/todos");
         setTodos(data);
       } catch (err) {
-        console.error(err);
+        console.log(err.status);
+        handleAuthError(err);
       }
     };
 
     fetchTodos();
-  }, []);
+  }, [navigate]);
 
   const activeCount = todos.filter((todo) => todo.isActive).length;
 
@@ -36,37 +53,38 @@ const TodoPage = () => {
     if (!input.trim()) return;
 
     try {
-      const { data } = await axios.post("http://localhost:5000/todos", {
+      const { data } = await api.post("/todos", {
         todos: input,
       });
 
       setTodos((prev) => [...prev, data]);
       setInput("");
+      toast.success("Todo added");
     } catch (err) {
-      console.error(err);
+      handleAuthError(err);
     }
   };
 
   const toggleActive = async (id) => {
     try {
-      const { data } = await axios.patch(
-        `http://localhost:5000/todos/toggle/${id}`
-      );
+      const { data } = await api.patch(`/todos/toggle/${id}`);
 
       setTodos((prev) =>
         prev.map((todo) => (todo._id === data._id ? data : todo))
       );
     } catch (err) {
-      console.error(err);
+      handleAuthError(err);
     }
   };
 
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/todos/${id}`);
+      await api.delete(`/todos/${id}`);
+
       setTodos((prev) => prev.filter((todo) => todo._id !== id));
+      toast.success("Todo deleted");
     } catch (err) {
-      console.error(err);
+      handleAuthError(err);
     }
   };
 
@@ -93,6 +111,7 @@ const TodoPage = () => {
           completedCount={todos.length - activeCount}
         />
       </main>
+
       <Foot />
     </>
   );
