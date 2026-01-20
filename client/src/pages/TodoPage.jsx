@@ -33,7 +33,6 @@ const TodoPage = () => {
         const { data } = await api.get("/todos");
         setTodos(data);
       } catch (err) {
-        console.log(err.status);
         handleAuthError(err);
       }
     };

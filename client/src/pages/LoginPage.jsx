@@ -3,13 +3,29 @@ import { FaUser, FaLock } from "react-icons/fa";
 import AuthLayout from "../components/AuthLayout";
 import AuthInput from "../components/AuthInput";
 import { Link } from "react-router-dom";
+import api from "../api.js";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    console.log({ email, password });
+  const handleSubmit = async () => {
+    try {
+      const { data } = await api.post("/users/login", {
+      email, password
+      });
+      console.log(data);
+      if(data.success) {
+        setTimeout(() => {
+          navigate("/");
+        }, 1500)
+      }
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
   };
 
   return (
@@ -51,7 +67,7 @@ const LoginPage = () => {
           type="submit"
           className="w-full h-11 bg-black text-white rounded-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           Login
-        </button>
+        </button> 
       </form>
     </AuthLayout>
   );
