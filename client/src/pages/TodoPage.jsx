@@ -11,11 +11,11 @@ import LogOut from "../components/LogOut.jsx";
 import User from "../components/User.jsx";
 
 const TodoPage = () => {
+  const [user, setUser] = useState("");
+
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
-
-  const user = useRef("user");
 
   const navigate = useNavigate();
 
@@ -77,7 +77,7 @@ const TodoPage = () => {
       const { data } = await api.patch(`/todos/toggle/${id}`);
 
       setTodos((prev) =>
-        prev.map((todo) => (todo._id === data._id ? data : todo))
+        prev.map((todo) => (todo._id === data._id ? data : todo)),
       );
     } catch (err) {
       handleAuthError(err);
@@ -95,9 +95,22 @@ const TodoPage = () => {
     }
   };
 
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data } = await api.get("/users/getUser");
+        setUser(data);
+      } catch (err) {
+        handleAuthError(err);
+      }
+    };
+
+    getUser();
+  }, []);
+
   return (
     <>
-    <User />
+      <User user={user} />
       <main className="bg-white max-w-4xl m-auto p-5 rounded-lg mt-12 shadow-xl">
         <TodoInput input={input} setInput={setInput} addTodo={addTodo} />
 

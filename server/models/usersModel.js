@@ -92,6 +92,12 @@ UserSchema.statics.removeRefreshToken = async function (token) {
   return user;
 };
 
+UserSchema.statics.getUser = async function (_id) {
+  const user = await this.findOne({_id});
+  if(!user) return null;
+
+  return user.username;
+}
 
 const Users = model("User", UserSchema);
 

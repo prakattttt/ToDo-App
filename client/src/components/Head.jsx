@@ -2,7 +2,7 @@ import logo from "../assets/checklist.png";
 
 const Head = () => {
   return (
-    <header className="center flex-col mx-8 mt-28">
+    <header className="center flex-col m-8 mt-16">
       <div className="center mb-2">
         <img src={logo} className="w-12" alt="logo" />
         <span className="text-3xl font-bold ml-1 font-ubuntu">Todo App</span>

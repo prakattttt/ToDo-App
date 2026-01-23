@@ -116,6 +116,15 @@ const refreshAccessToken = async (req, res, next) => {
   }
 };
 
+const getTodosUser = async (req, res, next) => {
+  try {
+    const data = await Users.getUser(req._id);
+    res.status(200).json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
 function generateAccessToken(userId) {
   return jwt.sign({ _id: userId }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "15m",
@@ -128,4 +137,4 @@ function generateRefreshToken(userId) {
   });
 }
 
-export { loginUser, registerUser, logoutUser, refreshAccessToken };
+export { loginUser, registerUser, logoutUser, refreshAccessToken, getTodosUser };
